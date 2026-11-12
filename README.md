@@ -1,7 +1,7 @@
 # LoopScope: Infinite-Loop Detection and the Limits of Computation
 
 **Formal Language and Automata — CLA-2 Assessment, Task 4**  
-**Student:** Saffhrin X P ·  **Registration number:** RA2411026050224
+**Student:** Saffhrin  ·  **Registration number:** to be added
 
 LoopScope demonstrates why no program can decide termination correctly for every possible program and input, then implements a small analyzer that can give exact answers on a clearly stated restricted language.
 
@@ -59,29 +59,56 @@ This is a different semantics from unbounded mathematical integers. A loop can h
 
 ### From the software question to the halting problem
 
-![Diagram mapping a real program and input to the formal halting problem](docs/diagrams/problem_mapping.svg)
+![Diagram mapping a real program and input to the formal halting problem](docs/diagrams/problem_mapping.png)
 
 *Figure 1. A program and input map to a Turing machine and input. A timeout is inconclusive, and no universal exact decider exists.*
 
-[Open the full-size problem mapping diagram](docs/diagrams/problem_mapping.svg).
+[Open the editable problem mapping diagram](docs/diagrams/problem_mapping.dot) · [Open the vector version](docs/diagrams/problem_mapping.svg).
 
 ### Where the halting problem sits in the language classes
 
-![Diagram of decidable and recognizable language classes](docs/diagrams/decidability_classes.svg)
+![Diagram of decidable and recognizable language classes](docs/diagrams/decidability_classes.png)
 
 *Figure 2. `HALT_TM` is recognizable but undecidable; its complement `LOOP_TM` is not recognizable.*
 
-[Open the full-size language class diagram](docs/diagrams/decidability_classes.svg) · [View the analyzer pipeline](docs/diagrams/loopscope_pipeline.svg).
+[Open the editable language class diagram](docs/diagrams/decidability_classes.dot) · [Open the vector version](docs/diagrams/decidability_classes.svg).
+
+### How LoopScope chooses its result
+
+![LoopScope source analysis pipeline](docs/diagrams/loopscope_pipeline.png)
+
+*Figure 3. Supported loops receive a proof under a named model; unsupported programs receive `UNKNOWN`.*
+
+[Open the editable pipeline diagram](docs/diagrams/loopscope_pipeline.dot) · [Open the vector version](docs/diagrams/loopscope_pipeline.svg).
 
 ## Project contents
 
 ```text
-loopguard/analyzer.py     parser, proof rules, finite-width simulator
-loopguard/cli.py          command-line examples
-examples/                 readable source examples
-docs/REPORT.md             individual project report draft
-docs/diagrams/             original SVG diagrams
+loopguard/                 analyzer, CLI, and bundled examples
+  analyzer.py              parser, proof rules, finite-width simulator
+  cli.py                   command-line demonstration
+  programs.py              sample-program catalogue
+examples/                  readable example source files
+docs/
+  REPORT.md                 project report draft
+  FORMAL_MODEL.md           grammar, transitions, proof rules, limitations
+  diagrams/                 editable DOT plus PNG and SVG figures
+tools/
+  make_diagrams.py          rebuilds the PNG previews
 ```
+
+The report, model notes, and diagrams are kept as separate files so each part is easy to find and update.
+
+## Rebuild diagram previews
+
+Install the optional image dependency, then run:
+
+```powershell
+python -m pip install -r requirements-diagrams.txt
+python tools/make_diagrams.py
+```
+
+This rebuilds the three PNG previews from the diagram layouts in the script. Editable Graphviz source files are included beside each figure.
 
 ## Academic scope and individual work
 
@@ -92,4 +119,3 @@ The project is an original implementation and explanation. It uses the sample re
 ## License
 
 For coursework and educational use. Add the license required by the course or institution if one is specified.
-
