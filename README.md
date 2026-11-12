@@ -1,7 +1,7 @@
 # LoopScope: Infinite-Loop Detection and the Limits of Computation
 
 **Formal Language and Automata — CLA-2 Assessment, Task 4**  
-**Student:** Saffhrin  ·  **Registration number:** to be added
+**Student:** Saffhrin X P ·  **Registration number:** RA2411026050224
 
 LoopScope demonstrates why no program can decide termination correctly for every possible program and input, then implements a small analyzer that can give exact answers on a clearly stated restricted language.
 
