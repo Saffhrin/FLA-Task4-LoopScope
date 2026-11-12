@@ -21,7 +21,7 @@ The implementation is intentionally small enough to inspect. It does **not** cla
 Requires Python 3.10 or later. There are no third-party runtime dependencies.
 
 ```powershell
-cd FLA-Task4-Infinite-Loop-Detection-Individual
+cd FLA-Task4-LoopScope
 python -m loopguard
 python -m loopguard --example countdown
 python -m loopguard --example stuck --fixed-width 4
@@ -57,9 +57,21 @@ This is a different semantics from unbounded mathematical integers. A loop can h
 
 ## Diagrams
 
-- [Analyzer pipeline](docs/diagrams/loopscope_pipeline.svg)
-- [Problem-to-theory map](docs/diagrams/problem_mapping.svg)
-- [Language class map](docs/diagrams/decidability_classes.svg)
+### From the software question to the halting problem
+
+![Diagram mapping a real program and input to the formal halting problem](docs/diagrams/problem_mapping.svg)
+
+*Figure 1. A program and input map to a Turing machine and input. A timeout is inconclusive, and no universal exact decider exists.*
+
+[Open the full-size problem mapping diagram](docs/diagrams/problem_mapping.svg).
+
+### Where the halting problem sits in the language classes
+
+![Diagram of decidable and recognizable language classes](docs/diagrams/decidability_classes.svg)
+
+*Figure 2. `HALT_TM` is recognizable but undecidable; its complement `LOOP_TM` is not recognizable.*
+
+[Open the full-size language class diagram](docs/diagrams/decidability_classes.svg) · [View the analyzer pipeline](docs/diagrams/loopscope_pipeline.svg).
 
 ## Project contents
 
@@ -80,3 +92,4 @@ The project is an original implementation and explanation. It uses the sample re
 ## License
 
 For coursework and educational use. Add the license required by the course or institution if one is specified.
+
