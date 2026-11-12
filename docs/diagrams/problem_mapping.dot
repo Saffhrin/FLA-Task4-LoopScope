@@ -1,0 +1,15 @@
+digraph ProblemMapping {
+  graph [rankdir=TB, bgcolor="white", pad=0.3, nodesep=0.45, ranksep=0.55, fontname="Arial", label="From software behavior to the halting problem", labelloc=t, fontsize=22];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=14, margin="0.22,0.14"];
+  edge [color="#475569", arrowsize=0.8];
+  real [label="Real-world question\nWill program P stop on input w?", fillcolor="#eff6ff", color="#2563eb"];
+  model [label="Formal encoding\nTuring machine M + input w", fillcolor="#eff6ff", color="#2563eb"];
+  halt [label="⟨M,w⟩ ∈ HALT_TM?\nRecognizable, but undecidable", fillcolor="#fef3c7", color="#d97706"];
+  timeout [label="Timeout expires\nNo proof: it may halt later", fillcolor="#fee2e2", color="#dc2626"];
+  restricted [label="Restricted model\nProof-backed result or UNKNOWN", fillcolor="#dcfce7", color="#16a34a"];
+  real -> model [label="encode"];
+  model -> halt [label="ask membership"];
+  halt -> timeout [label="finite wait is inconclusive"];
+  halt -> restricted [label="use analyzable subset"];
+  {rank=same; timeout; restricted;}
+}
