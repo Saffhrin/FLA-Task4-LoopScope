@@ -1,0 +1,15 @@
+digraph DecidabilityClasses {
+  graph [rankdir=TB, bgcolor="white", pad=0.25, nodesep=0.45, ranksep=0.55, fontname="Arial", label="Language classes for the halting problem", labelloc=t, fontsize=22];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=14, margin="0.22,0.14"];
+  edge [color="#475569", arrowsize=0.8];
+  all [label="All languages", fillcolor="#f8fafc", color="#64748b"];
+  re [label="Turing-recognizable (RE)", fillcolor="#eff6ff", color="#2563eb"];
+  dec [label="Decidable\nA decider halts on every input", fillcolor="#dcfce7", color="#16a34a"];
+  halt [label="HALT_TM\nRecognizable, undecidable", fillcolor="#fef3c7", color="#d97706"];
+  loop [label="LOOP_TM = complement(HALT_TM)\nNot Turing-recognizable", fillcolor="#fee2e2", color="#dc2626"];
+  all -> re [label="contains"];
+  re -> dec [label="contains"];
+  re -> halt [label="includes"];
+  all -> loop [label="outside RE"];
+  {rank=same; dec; halt; loop;}
+}
