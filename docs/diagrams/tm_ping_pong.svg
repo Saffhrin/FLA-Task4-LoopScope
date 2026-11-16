@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 450" role="img" aria-labelledby="title desc">
+  <title id="title">Two-state Turing machine that loops forever</title>
+  <desc id="desc">The start arrow enters q0. On 0, q0 writes 0, moves right, and enters q1. On blank, q1 writes blank, moves left, and returns to q0.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#334155"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#315da8"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="450" rx="18" fill="#ffffff"/>
+  <text x="500" y="48" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="24" font-weight="700" fill="#14233b">Ping-pong Turing machine</text>
+  <text x="500" y="78" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="16" fill="#5e6b80">Transition label: read / write, move</text>
+
+  <circle cx="95" cy="210" r="8" fill="#14233b"/>
+  <path d="M 105 210 L 263 210" fill="none" stroke="#334155" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="183" y="190" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="16" fill="#5e6b80">start</text>
+
+  <circle cx="350" cy="210" r="82" fill="#eff6ff" stroke="#315da8" stroke-width="4"/>
+  <text x="350" y="220" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="34" font-weight="700" fill="#14233b">q0</text>
+  <circle cx="700" cy="210" r="82" fill="#f3f6fa" stroke="#64748b" stroke-width="4"/>
+  <text x="700" y="220" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="34" font-weight="700" fill="#14233b">q1</text>
+
+  <path d="M 433 190 L 609 190" fill="none" stroke="#315da8" stroke-width="4" marker-end="url(#arrowBlue)"/>
+  <rect x="475" y="132" width="112" height="44" rx="10" fill="#ffffff"/>
+  <text x="531" y="161" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="20" font-weight="700" fill="#244d91">0 / 0, R</text>
+
+  <path d="M 700 294 C 700 405, 350 405, 350 294" fill="none" stroke="#334155" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="427" y="349" width="196" height="42" rx="10" fill="#ffffff"/>
+  <text x="525" y="377" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="20" font-weight="700" fill="#334155">□ / □, L</text>
+  <text x="500" y="435" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="15" fill="#5e6b80">On tape 0□, the head returns to the same configuration every two moves.</text>
+</svg>
+
