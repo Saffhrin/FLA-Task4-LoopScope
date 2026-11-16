@@ -87,6 +87,14 @@ This is a different semantics from unbounded mathematical integers. A loop can h
 
 [Open the editable pipeline diagram](docs/diagrams/loopscope_pipeline.dot) · [Open the vector version](docs/diagrams/loopscope_pipeline.svg).
 
+### Turing machine transition diagram
+
+![Two-state ping-pong Turing machine transition diagram](docs/diagrams/tm_ping_pong.svg)
+
+*Figure 4. The machine moves right from `q0` on `0` and left from `q1` on blank. On tape `0□`, its configuration repeats after two transitions.*
+
+[Open the transition diagram](docs/diagrams/tm_ping_pong.svg) · [Read the transition explanation](docs/FORMAL_MODEL.md#turing-machine-transition-diagram-ping-pong).
+
 ## Project contents
 
 ```text
