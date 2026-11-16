@@ -27,6 +27,17 @@ At each iteration, the machine tests the guard. If it is false, it halts. Otherw
 
 The parser and implementation of these rules are in [`loopguard/analyzer.py`](../loopguard/analyzer.py).
 
+## Turing-machine transition diagram: ping-pong
+
+The repository also includes a two-state Turing machine with a visibly repeating run:
+
+![Ping-pong Turing machine transition diagram](diagrams/tm_ping_pong.svg)
+
+*Figure. Starting on the `0` in tape `0□`, `q0` reads and rewrites `0`, moves right, and enters `q1`. State `q1` reads the blank, leaves it blank, moves left, and returns to `q0`. The head and tape return to the same configuration after two moves, so the deterministic computation repeats forever.*
+
+The transition labels use `read / write, move`; `□` denotes a blank tape cell. This example illustrates a loop in a Turing machine. The browser analyzer is a separate, restricted integer-loop model.
+
 ## Finite-width semantics
 
 For a `b`-bit unsigned model, the configuration is the current value in `{0,…,2^b−1}`. The transition updates the value modulo `2^b`. There are finitely many configurations. If a configuration repeats while the guard is true, determinism implies that all subsequent configurations repeat, proving a loop. If a false guard is reached first, the execution halts. This finite-width result may differ from the unbounded-integer result.
+
