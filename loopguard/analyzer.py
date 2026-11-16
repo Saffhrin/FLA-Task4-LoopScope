@@ -75,31 +75,31 @@ def _classify(program: LoopProgram) -> tuple[Verdict, str, int | None]:
 
     if op in ("<", "<="):
         if d <= 0:
-            return Verdict.LOOPS, f"The guard is true and an update of {d} cannot increase {x} toward {b}."
+            return Verdict.LOOPS, f"The guard is true and an update of {d} cannot increase {x} toward {b}.", None
         distance = b - x + (1 if op == "<=" else 0)
         count = max(0, (distance + d - 1) // d)
         return Verdict.HALTS, f"Each update increases the value by {d}; after {count} update(s), the guard is false.", count
 
     if op in (">", ">="):
         if d >= 0:
-            return Verdict.LOOPS, f"The guard is true and an update of {d} cannot decrease {x} toward {b}."
+            return Verdict.LOOPS, f"The guard is true and an update of {d} cannot decrease {x} toward {b}.", None
         distance = x - b + (1 if op == ">=" else 0)
         count = max(0, (distance + (-d) - 1) // (-d))
         return Verdict.HALTS, f"Each update decreases the value by {-d}; after {count} update(s), the guard is false.", count
 
     if op == "==":
         if d == 0:
-            return Verdict.LOOPS, "The equality guard stays true because the body leaves the value unchanged."
+            return Verdict.LOOPS, "The equality guard stays true because the body leaves the value unchanged.", None
         return Verdict.HALTS, "The equality guard is true for the current value; one nonzero update makes it false.", 1
 
     # x != b
     if d == 0:
-        return Verdict.LOOPS, "The value never changes, so it never reaches the value that would make != false."
+        return Verdict.LOOPS, "The value never changes, so it never reaches the value that would make != false.", None
     difference = b - x
     if difference % d == 0 and difference // d > 0:
         count = difference // d
         return Verdict.HALTS, f"The repeated update reaches {b} after {count} update(s), making != false.", count
-    return Verdict.LOOPS, "The constant-step sequence never lands on the bound, so != remains true forever."
+    return Verdict.LOOPS, "The constant-step sequence never lands on the bound, so != remains true forever.", None
 
 
 def analyze(source: str) -> AnalysisResult:
@@ -143,3 +143,4 @@ def simulate_fixed_width(program: LoopProgram, bits: int = 4) -> AnalysisResult:
         program,
         steps,
     )
+
