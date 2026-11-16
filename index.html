@@ -81,6 +81,15 @@
     .result-detail { margin: 11px 0 0; padding-top: 10px; border-top: 1px solid #edf0f4; color: var(--muted); font-size: 13px; }
     .empty { color: var(--muted); }
     .model-note { margin: 15px 1px 0; color: var(--muted); font-size: 13px; }
+    .loop-diagram { margin-top: 22px; }
+    .loop-diagram-wrap { padding: 12px 18px; overflow-x: auto; background: #fbfcfe; }
+    .loop-diagram-wrap svg { display: block; width: 100%; min-width: 620px; height: auto; }
+    .diagram-node { fill: #eff6ff; stroke: #315da8; stroke-width: 3; }
+    .diagram-halt { fill: #e3f4eb; stroke: #147849; stroke-width: 3; }
+    .diagram-edge { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#loop-arrow); }
+    .diagram-label { fill: #263b5a; font: 700 15px system-ui, sans-serif; }
+    .diagram-node-label { fill: #14233b; font: 700 16px system-ui, sans-serif; }
+    .diagram-caption { margin: 0; padding: 0 21px 20px; color: var(--muted); font-size: 14px; }
     .diagram-card { margin-top: 22px; }
     .diagram-wrap { padding: 12px 18px 4px; background: #fbfcfe; }
     .diagram-wrap img { display: block; width: 100%; height: auto; }
@@ -155,6 +164,37 @@ while i > 0:
       </div>
     </section>
 
+    <section class="card loop-diagram" aria-labelledby="loop-diagram-title">
+      <div class="card-head">
+        <h2 id="loop-diagram-title">Transition diagram for this loop</h2>
+        <p id="loop-diagram-subtitle">Analyze a supported loop to show its guard and update transitions.</p>
+      </div>
+      <div class="loop-diagram-wrap">
+        <svg id="loop-diagram-svg" viewBox="0 0 900 300" role="img" aria-labelledby="loop-svg-title loop-svg-desc">
+          <title id="loop-svg-title">Loop control-flow transition diagram</title>
+          <desc id="loop-svg-desc">The start state enters the guard check. A true guard leads to the update state and returns to the guard. A false guard leads to the halt state.</desc>
+          <defs><marker id="loop-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker></defs>
+          <circle cx="78" cy="140" r="7" fill="#14233b"/>
+          <path class="diagram-edge" d="M87 140 L182 140"/>
+          <circle class="diagram-node" cx="280" cy="140" r="68"/>
+          <text class="diagram-node-label" x="280" y="136" text-anchor="middle">Check guard</text>
+          <text class="diagram-label" x="280" y="160" text-anchor="middle">q_check</text>
+          <circle class="diagram-node" cx="580" cy="140" r="68"/>
+          <text class="diagram-node-label" x="580" y="136" text-anchor="middle">Apply update</text>
+          <text class="diagram-label" x="580" y="160" text-anchor="middle">q_update</text>
+          <circle class="diagram-halt" cx="800" cy="140" r="58"/>
+          <text class="diagram-node-label" x="800" y="146" text-anchor="middle">HALTS</text>
+          <path class="diagram-edge" d="M348 122 L510 122"/>
+          <text id="loop-true-label" class="diagram-label" x="430" y="102" text-anchor="middle">guard true</text>
+          <path class="diagram-edge" d="M580 208 C580 282 280 282 280 208"/>
+          <text id="loop-update-label" class="diagram-label" x="430" y="270" text-anchor="middle">x ← x + d</text>
+          <path class="diagram-edge" d="M333 183 C440 235 620 235 744 177"/>
+          <text id="loop-false-label" class="diagram-label" x="540" y="224" text-anchor="middle">guard false</text>
+        </svg>
+      </div>
+      <p class="diagram-caption" id="loop-diagram-note">The nodes show the loop’s control flow. The variable value is part of the configuration, so this is not a finite-state machine for unbounded integers.</p>
+    </section>
+
     <section class="card diagram-card" aria-labelledby="tm-diagram-title">
       <div class="card-head">
         <h2 id="tm-diagram-title">Turing machine transition diagram: ping-pong</h2>
@@ -209,6 +249,23 @@ while i > 0:
     const bitsWrap = document.getElementById("bits-wrap");
     const bitsInput = document.getElementById("bits");
     const resultBox = document.getElementById("results");
+    const loopDiagram = document.querySelector(".loop-diagram");
+
+    function updateLoopDiagram(program) {
+      const { variable, initial, operator, bound, step } = program;
+      const stepText = step < 0n ? `- ${-step}` : `+ ${step}`;
+      const guard = `${variable} ${operator} ${bound}`;
+      document.getElementById("loop-diagram-subtitle").textContent =
+        `For this input: ${variable} = ${initial}; while ${guard}; update ${variable} ${stepText}.`;
+      document.getElementById("loop-true-label").textContent = `${guard} is true`;
+      document.getElementById("loop-false-label").textContent = `${guard} is false`;
+      document.getElementById("loop-update-label").textContent = `${variable} ← ${variable} ${stepText}`;
+      document.getElementById("loop-svg-title").textContent = `Transition diagram for ${variable} = ${initial}; while ${guard}; ${variable} ${stepText}`;
+      document.getElementById("loop-svg-desc").textContent =
+        `The guard ${guard} true transition goes to the update ${variable} becomes ${variable} ${stepText}, then returns to the guard. When ${guard} is false, execution halts.`;
+      document.getElementById("loop-diagram-note").textContent =
+        `This is the control-flow transition diagram for the entered loop. The current value of ${variable} is part of each configuration; unbounded integer values mean this diagram is not a finite-state machine.`;
+    }
 
     function parseProgram(source) {
       const pattern = /^\s*([A-Za-z_]\w*)\s*=\s*(-?\d+)\s*\n\s*while\s+\1\s*(<=|>=|==|!=|<|>)\s*(-?\d+)\s*:\s*\n\s+([A-Za-z_]\w*)\s*(\+=|-=)\s*(-?\d+)\s*$/;
@@ -318,6 +375,7 @@ while i > 0:
       resultBox.replaceChildren();
       const program = parseProgram(sourceInput.value);
       if (!program) {
+        loopDiagram.hidden = true;
         addResult("Supported grammar check", {
           verdict: "UNKNOWN",
           reason: "Outside the supported grammar. This analyzer does not infer a verdict for arbitrary programs."
@@ -325,6 +383,8 @@ while i > 0:
         return;
       }
 
+      loopDiagram.hidden = false;
+      updateLoopDiagram(program);
       const unbounded = classify(program);
       const updates = unbounded.steps === undefined ? "" : `Worked result: ${unbounded.steps} update(s) in the unbounded-integer model.`;
       addResult("Unbounded integers", unbounded, updates);
