@@ -1,7 +1,7 @@
 # LoopScope: Infinite-Loop Detection and the Limits of Computation
 
 **Formal Language and Automata — CLA-2 Assessment, Task 4**  
-**Student:** Saffhrin  ·  **Registration number:** to be added
+**Student:** Saffhrin  ·  **Registration number:** RA2411026050224
 
 LoopScope demonstrates why no program can decide termination correctly for every possible program and input, then implements a small analyzer that can give exact answers on a clearly stated restricted language.
 
@@ -15,6 +15,12 @@ LoopScope demonstrates why no program can decide termination correctly for every
 | Finite-width machine | Unsigned `b`-bit value with wraparound | Detects a repeated configuration; repetition proves a loop in that model |
 
 The implementation is intentionally small enough to inspect. It does **not** claim to analyze arbitrary Python or arbitrary Turing machines.
+
+## Browser demo
+
+The repository includes a standalone [`index.html`](index.html) demo. It lets you edit a supported loop, load examples, and compare the proof-based result for unbounded integers with an optional unsigned fixed-width simulation. It runs entirely in the browser and does not execute the entered source code.
+
+To publish it with GitHub Pages, open **Settings → Pages** for this repository, choose **Deploy from a branch**, select **main** and **/(root)**, then save. After GitHub finishes deploying, the page will be available at `https://saffhrin.github.io/FLA-Task4-LoopScope/`.
 
 ## Run it
 
@@ -112,10 +118,9 @@ This rebuilds the three PNG previews from the diagram layouts in the script. Edi
 
 ## Academic scope and individual work
 
-The assignment brief describes Task 4 as team work. This repository records one student's implementation and report; confirm with the course faculty that an individual submission is acceptable. Add the registration number and any required contribution statement before submission.
-
-The project is an original implementation and explanation. It uses the sample repository only as a reference for topic and presentation, not as source code or report text.
+This repository contains an individual implementation and report. The project is an original implementation and explanation. It uses the sample repository only as a reference for topic and presentation, not as source code or report text.
 
 ## License
 
 For coursework and educational use. Add the license required by the course or institution if one is specified.
+
