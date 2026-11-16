@@ -18,7 +18,7 @@ The implementation is intentionally small enough to inspect. It does **not** cla
 
 ## Browser demo
 
-The repository includes a standalone [`index.html`](index.html) demo. It lets you edit a supported loop, load examples, and compare the proof-based result for unbounded integers with an optional unsigned fixed-width simulation. It runs entirely in the browser and does not execute the entered source code.
+The repository includes a standalone [`index.html`](index.html) demo. It lets you edit a supported loop, load examples, view a transition diagram labeled for that loop, and compare the proof-based result for unbounded integers with an optional unsigned fixed-width simulation. It runs entirely in the browser and does not execute the entered source code.
 
 To publish it with GitHub Pages, open **Settings → Pages** for this repository, choose **Deploy from a branch**, select **main** and **/(root)**, then save. After GitHub finishes deploying, the page will be available at `https://saffhrin.github.io/FLA-Task4-LoopScope/`.
 
